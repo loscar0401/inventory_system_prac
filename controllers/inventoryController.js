@@ -74,7 +74,7 @@ async function addItem(req, res) {
 }
 
 async function updateItem(req, res) {
-  const { id } = req.params.id;
+  const { id } = req.params;
   const userId = req.user.id;
   const { itemName, category, quantity, price, status } = req.body;
 
@@ -90,6 +90,19 @@ async function updateItem(req, res) {
       success: false,
       message: "Invalid User ID",
     });
+
+    if (
+      !itemName ||
+      !category ||
+      quantity === undefined ||
+      price === undefined ||
+      !status
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Input on Update item",
+      });
+    }
   }
   try {
     const results = await inventoryModel.updateItem(
