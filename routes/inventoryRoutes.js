@@ -6,6 +6,6 @@ const inventoryController = require("../controllers/inventoryController");
 router.get("/", authenticateToken, inventoryController.getInventory);
 router.post("/", authenticateToken, inventoryController.addItem);
 router.put("/:id", authenticateToken, inventoryController.updateItem);
-// router.delete("/:id", authenticateToken, inventoryController.deleteItem);
+router.delete("/:id", authenticateToken, inventoryController.deleteItem);
 
 module.exports = router;

@@ -35,8 +35,18 @@ async function updateItem(
   return results;
 }
 
+async function deleteItem(id, userId) {
+  const [results] = await db.query(
+    "DELETE FROM inventory WHERE id=? and user_id=?",
+    [id, userId],
+  );
+
+  return results;
+}
+
 module.exports = {
   getInventory,
   addItem,
   updateItem,
+  deleteItem,
 };

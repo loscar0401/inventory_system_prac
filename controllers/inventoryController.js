@@ -62,7 +62,7 @@ async function addItem(req, res) {
     return res.status(201).json({
       success: true,
       message: "Item successfully added",
-      data: results,
+      data: results.insertId,
     });
   } catch (err) {
     console.error("Error in addItem controller:", err);
@@ -90,19 +90,18 @@ async function updateItem(req, res) {
       success: false,
       message: "Invalid User ID",
     });
-
-    if (
-      !itemName ||
-      !category ||
-      quantity === undefined ||
-      price === undefined ||
-      !status
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Input on Update item",
-      });
-    }
+  }
+  if (
+    !itemName ||
+    !category ||
+    quantity === undefined ||
+    price === undefined ||
+    !status
+  ) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid Input on Update item",
+    });
   }
   try {
     const results = await inventoryModel.updateItem(
@@ -133,8 +132,49 @@ async function updateItem(req, res) {
     });
   }
 }
+
+async function deleteItem(req, res) {
+  const { id } = req.params;
+  const userId = req.user.id;
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({
+      success: false,
+      message: "Valid Item ID is required in the URL",
+    });
+  }
+
+  if (!userId) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid User ID",
+    });
+  }
+  try {
+    const results = await inventoryModel.deleteItem(id, userId);
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Item not found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Item successfully deleted",
+    });
+  } catch (err) {
+    console.error("Error in deleteItem controller:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server error while deleting item in inventory",
+    });
+  }
+}
+
 module.exports = {
   getInventory,
   addItem,
   updateItem,
+  deleteItem,
 };
