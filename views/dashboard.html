@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory Dashboard</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Inventory System</p>
+        <h1>Dashboard</h1>
+      </div>
+
+      <div class="topbar-actions">
+        <span id="userBadge" class="user-badge">User</span>
+        <button id="logoutButton" class="secondary-button" type="button">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <main class="dashboard-layout">
+      <section class="inventory-form-section">
+        <h2>Add Item</h2>
+
+        <form id="itemForm" class="form">
+          <input id="itemId" type="hidden" />
+
+          <label for="itemName">Item Name</label>
+          <input
+            id="itemName"
+            type="text"
+            placeholder="Example: Keyboard"
+            required
+          />
+
+          <label for="category">Category</label>
+          <input
+            id="category"
+            type="text"
+            placeholder="Example: Electronics"
+            required
+          />
+
+          <label for="quantity">Quantity</label>
+          <input id="quantity" type="number" min="0" placeholder="0" required />
+
+          <label for="price">Price</label>
+          <input
+            id="price"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+            required
+          />
+
+          <label for="status">Status</label>
+          <select id="status" required>
+            <option value="available">Available</option>
+            <option value="low-stock">Low Stock</option>
+            <option value="out-of-stock">Out of Stock</option>
+          </select>
+
+          <button id="saveItemButton" type="submit">Add Item</button>
+          <button
+            id="cancelEditButton"
+            class="secondary-button hidden"
+            type="button"
+          >
+            Cancel Edit
+          </button>
+        </form>
+      </section>
+
+      <section class="inventory-list-section">
+        <div class="section-heading">
+          <div>
+            <h2>My Inventory</h2>
+            <p id="inventoryCount" class="muted">0 items</p>
+          </div>
+          <span id="adminBadge" class="admin-badge hidden">Admin View</span>
+        </div>
+
+        <div class="filters">
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search item name or category"
+          />
+          <select id="statusFilter">
+            <option value="all">All Status</option>
+            <option value="available">Available</option>
+            <option value="low-stock">Low Stock</option>
+            <option value="out-of-stock">Out of Stock</option>
+          </select>
+        </div>
+
+        <p id="message" class="message" aria-live="polite"></p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+              <tr>
+                <td colspan="7" class="empty-state">Loading inventory...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/dashboard.js"></script>
+  </body>
+</html>

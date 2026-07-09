@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory Register</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body class="auth-page">
+    <main class="auth-shell">
+      <section class="auth-panel">
+        <p class="eyebrow">Inventory System</p>
+        <h1>Create Account</h1>
+        <p class="muted">Register before managing your inventory.</p>
+
+        <form id="registerForm" class="form">
+          <label for="name">Full Name</label>
+          <input id="name" type="text" placeholder="Juan Dela Cruz" required />
+
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            required
+          />
+
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Create password"
+            required
+          />
+
+          <label for="role">Role</label>
+          <select id="role" required>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+
+          <button id="registerButton" type="submit">Register</button>
+        </form>
+
+        <p id="message" class="message" aria-live="polite"></p>
+
+        <p class="switch-link">
+          Already registered?
+          <a href="/">Login here</a>
+        </p>
+      </section>
+    </main>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+  </body>
+</html>
