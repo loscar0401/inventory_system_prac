@@ -81,8 +81,37 @@ function renderInventory(items) {
     <td>${item.price}</td>
     <td>${item.status}</td>
     <td>${item.date_added}</td>
-    <td></td>`;
+    <td><button onclick="edititem(${item.id})">Edit</button></td>
+    <td><button onclick="deleteItem(${item.id})">Delete</button></td>`;
 
     inventoryTableBody.appendChild(row);
   });
+}
+
+async function deleteItem(id) {
+  const token = localStorage.getItem("token");
+  const confirmDelete = confirm("Are you want to delete this item?");
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/inventory/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      alert("Item deleted successfully");
+      window.location.reload();
+    } else {
+      alert(data.message || "Failed to delete item");
+    }
+  } catch (err) {
+    alert("Something went wrong while deleting a item");
+    console.error(err);
+  }
 }
