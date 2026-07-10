@@ -1,7 +1,8 @@
 # Inventory Management System
 
-A simple inventory management system built with Node.js, Express.js, MySQL, and vanilla JavaScript.  
-The system allows users to manage their own inventory records securely using JWT authentication.
+A simple inventory management system built with Node.js, Express.js, MySQL, JWT, and vanilla JavaScript.
+
+This project allows users to register, log in, and manage their own inventory records securely. Each user can add, view, update, delete, search, and filter their own inventory items.
 
 ## Features
 
@@ -16,7 +17,10 @@ The system allows users to manage their own inventory records securely using JWT
 - Search inventory by item name or category
 - Filter inventory by status
 - Logout functionality
-- Responsive dashboard and auth page styling
+- Login page styling
+- Register page styling
+- Dashboard styling
+- Responsive layout
 
 ## Tech Stack
 
@@ -28,6 +32,8 @@ The system allows users to manage their own inventory records securely using JWT
 - JavaScript
 - JWT
 - bcrypt
+- dotenv
+- mysql2
 
 ## Project Structure
 
@@ -51,10 +57,13 @@ inventory_system_prac/
 ├── public/
 │   ├── css/
 │   │   ├── dashboard.css
-│   │   └── login.css
+│   │   ├── login.css
+│   │   └── register.css
+│   │
 │   └── js/
 │       ├── dashboard.js
-│       └── login.js
+│       ├── login.js
+│       └── register.js
 │
 ├── routes/
 │   ├── authRoutes.js
@@ -62,10 +71,11 @@ inventory_system_prac/
 │   └── pageRoutes.js
 │
 ├── views/
+│   ├── dashboard.html
 │   ├── login.html
-│   ├── register.html
-│   └── dashboard.html
+│   └── register.html
 │
 ├── app.js
 ├── package.json
 └── README.md
+```
