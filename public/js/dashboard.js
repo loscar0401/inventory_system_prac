@@ -109,6 +109,13 @@ function renderInventory(items) {
   let inventoryTableBody = document.getElementById("inventoryTableBody");
   inventoryTableBody.innerHTML = "";
 
+  if (items.length === 0) {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td colspan="7" class="empty-state">No inventory items found.</td>`;
+    inventoryTableBody.appendChild(row);
+    return;
+  }
+
   items.forEach((item) => {
     const row = document.createElement("tr");
 
