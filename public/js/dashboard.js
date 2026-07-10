@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   itemForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    const itemId = document.getElementById("itemId").value;
     const itemName = document.getElementById("itemName").value;
     const category = document.getElementById("category").value;
     const quantity = document.getElementById("quantity").value;
@@ -37,9 +38,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const status = document.getElementById("status").value;
 
     const token = localStorage.getItem("token");
+
+    let url;
+    let method;
+
+    if (itemId) {
+      url = `/inventory/${itemId}`;
+      method = "PUT";
+    } else {
+      url = "/inventory";
+      method = "POST";
+    }
+
     try {
-      const response = await fetch("/inventory", {
-        method: "POST",
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -56,14 +69,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Item added successfully");
+        alert(itemId ? "Item updated successfully" : "Item added successfully");
         itemForm.reset();
         window.location.reload();
       } else {
-        alert(data.message || "Failed to add item");
+        alert(data.message || "Failed to save item");
       }
     } catch (err) {
-      alert("Something went wrong while adding item");
+      alert("Something went wrong while saving item");
       console.error(err);
     }
   });
@@ -75,17 +88,27 @@ function renderInventory(items) {
   items.forEach((item) => {
     const row = document.createElement("tr");
 
-    row.innerHTML = `<td>${item.item_name}</td>
+    row.innerHTML = `
+    <td>${item.item_name}</td>
     <td>${item.category}</td>
     <td>${item.quantity}</td>
     <td>${item.price}</td>
     <td>${item.status}</td>
     <td>${item.date_added}</td>
-    <td><button onclick="edititem(${item.id})">Edit</button></td>
+    <td><button onclick='editItem(${JSON.stringify(item)})'>Edit</button></td>
     <td><button onclick="deleteItem(${item.id})">Delete</button></td>`;
 
     inventoryTableBody.appendChild(row);
   });
+}
+
+function editItem(item) {
+  document.getElementById("itemId").value = item.id;
+  document.getElementById("itemName").value = item.item_name;
+  document.getElementById("category").value = item.category;
+  document.getElementById("quantity").value = item.quantity;
+  document.getElementById("price").value = item.price;
+  document.getElementById("status").value = item.status;
 }
 
 async function deleteItem(id) {
