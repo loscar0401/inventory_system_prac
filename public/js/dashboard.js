@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await response.json();
     if (response.ok) {
       inventoryItems = data.data;
-      renderInventory(data.data);
+      renderInventory(inventoryItems);
     } else {
       localStorage.removeItem("token");
       window.location.href = "/";
@@ -140,7 +140,7 @@ function applyFilter() {
       item.item_name.toLowerCase().includes(searchValue) ||
       item.category.toLowerCase().includes(searchValue);
 
-    const matchesStatus = statusValue === "all" || item.status === statusValue;
+    const matchesStatus = statusValue === "" || item.status === statusValue;
 
     return matchesSearch && matchesStatus;
   });
