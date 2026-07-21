@@ -88,6 +88,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  const cancelEditButton = document.getElementById("cancelEditButton");
+  cancelEditButton.addEventListener("click", () => {
+    itemForm.reset();
+    document.getElementById("itemId").value = "";
+    document.getElementById("saveItemButton").textContent = "Add Item";
+    cancelEditButton.classList.add("hidden");
+  });
+
   // SEARCH + STATUS FILTER
   const searchInput = document.getElementById("searchInput");
   const statusFilter = document.getElementById("statusFilter");
@@ -164,6 +172,7 @@ function editItem(item) {
   document.getElementById("price").value = item.price;
   document.getElementById("status").value = item.status;
   document.getElementById("saveItemButton").textContent = "Update Item";
+  document.getElementById("cancelEditButton").classList.remove("hidden");
 }
 
 //DELETE ITEM
